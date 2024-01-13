@@ -1,0 +1,16 @@
+version: '3.1'
+
+services:
+  postgres:
+    image: postgres
+    container_name: drive
+    environment:
+      POSTGRES_PASSWORD: PrinterDoBrasil
+      POSTGRES_DB: drive
+    volumes:
+      - drive:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  drive: 

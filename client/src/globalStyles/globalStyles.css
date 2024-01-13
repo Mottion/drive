@@ -1,0 +1,9 @@
+body, html, * {
+  padding: 0;
+  margin: 0;
+  outline: none;
+  color: #FFFFFF;
+  font-family: "Roboto";
+  font-weight: 400;
+  text-decoration: none;
+}
