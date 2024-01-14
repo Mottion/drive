@@ -15,7 +15,25 @@ model User {
   name                  String
   email                 String @unique()
   password              String
-  folders               Folder[]
+  profileId             Int
+  imageUrl              String?
+  createdFolders        Folder[] @relation("OwnerFolders")
+  foldersWithAccess     Folder[] @relation("AccessFolders")
+  createdFiles          File[] @relation("OwnerFiles")
+  filesWithAccess       File[] @relation("AccessFiles")
+  profile               Profile @relation(fields: [profileId], references: [id])
+
+  // folders opositive relations
+  foldersWrite          Folder[] @relation("foldersWrite")
+  foldersDelete         Folder[] @relation("foldersDelete")
+  foldersUpdate         Folder[] @relation("foldersUpdate")
+  foldersShare          Folder[] @relation("foldersShare")
+
+  // files opositive relations
+  filesWrite          File[] @relation("filesWrite")
+  filesDelete         File[] @relation("filesDelete")
+  filesUpdate         File[] @relation("filesUpdate")
+  filesShare          File[] @relation("filesShare")
 }
 
 model Folder {
@@ -24,13 +42,40 @@ model Folder {
   parentFolderId        Int?
   parentFolder          Folder? @relation("Hierarchy", fields: [parentFolderId], references: [id])
   childFolders          Folder[] @relation("Hierarchy")
-  owner                 User @relation(fields: [ownerId], references: [id])
+  owner                 User @relation("OwnerFolders", fields: [ownerId], references: [id])
+  usersWithAccess       User[] @relation("AccessFolders")
+  profilesWithAccess    Profile[]
   files                 File[]
+
+  //folder permissions
+  write                 User[] @relation("foldersWrite")
+  delete                User[] @relation("foldersDelete")
+  update                User[] @relation("foldersUpdate")
+  share                 User[] @relation("foldersShare")
 }
 
 model File {
   id                    Int @id @default(autoincrement())
   folderId              Int
   fileLink              String
+  ownerId               Int
   folder                Folder @relation(fields: [folderId], references: [id])
+  owner                 User @relation("OwnerFiles", fields: [ownerId], references: [id])
+  usersWithAccess       User[] @relation("AccessFiles")
+  profilesWithAccess    Profile[]
+
+  //file permissions
+  write                 User[] @relation("filesWrite")
+  delete                User[] @relation("filesDelete")
+  update                User[] @relation("filesUpdate")
+  share                 User[] @relation("filesShare")
+}
+
+model Profile {
+  id                    Int @id @default(autoincrement())
+  name                  String @unique
+  access                String // CRUDS
+  users                 User[]
+  folders               Folder[]
+  files                 File[]
 }
