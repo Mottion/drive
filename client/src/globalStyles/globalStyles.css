@@ -6,4 +6,5 @@ body, html, * {
   font-family: "Roboto";
   font-weight: 400;
   text-decoration: none;
+  box-sizing: border-box;
 }

@@ -17,6 +17,7 @@ export const Container = styled.button`
     font-weight: 600;
     letter-spacing: 5px;
     font-size: 22px;
+    margin: 0;
   }
   
   &:hover{

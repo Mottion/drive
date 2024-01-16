@@ -6,10 +6,19 @@ import CustomButton from "../../components/customButton/CustomButton";
 
 // styled-components 
 import { Container } from "./styles";
+import { useServer } from "../../contexts/ServerContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 const LoginScreen: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("admin@gmail.com.br");
+  const [password, setPassword] = useState("admin123");
+  const server = useServer();
+  const {login} = useAuth();
+
+  async function handleLogin(){
+    const user = await server.login(email, password);
+    await login(user);
+  }
 
   return (
     <Container>
@@ -18,7 +27,7 @@ const LoginScreen: React.FC = () => {
         <CustomInput label="Email" value={{get: email, set: setEmail}} placeholder="Enter with your email" />
         <CustomInput label="Password" value={{get: password, set: setPassword}} placeholder="Enter with your password" />
         <a className="forgotten" href="#">Forgot your password?</a>
-        <CustomButton text="LOGIN" />
+        <CustomButton onclick={handleLogin} text="LOGIN" />
       </div>
     </Container>
   )

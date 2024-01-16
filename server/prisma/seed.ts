@@ -62,7 +62,7 @@ async function main() {
     create: {
       name: "Josh",
       email: "josh.software@gmail.com.br",
-      password: "aline123",
+      password: "josh123",
       profileId: software.id,
       imageUrl: null
     }
