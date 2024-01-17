@@ -127,6 +127,17 @@ async function main() {
       folderName: "sprint1"
     },
   })
+
+  const metasAdmin = await prisma.folder.upsert({
+    where: {id: 6},
+    update: {},
+    create: {
+      id: 6,
+      parentFolderId: dashboardAdmin.id,
+      ownerId: adminUser.id,
+      folderName: "metas"
+    },
+  })
 }
 
 

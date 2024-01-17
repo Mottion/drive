@@ -30,6 +30,19 @@ const MainLayout: React.FC = () => {
     }
   } 
 
+  function renderFolders(foldersArray: FolderEntityProps[]){
+    const elements = foldersArray.map((folder, index) => (
+      <Accordion
+        key={index}
+        folderId={folder.id.toString()}
+        folderName={folder.folderName} 
+        childrenFolders={renderFolders(folder.childFolders)} 
+        childrenFiles={[]}
+      />
+    ))
+    return elements;
+  }
+
   return (
     <Container>
       <header>
@@ -40,14 +53,7 @@ const MainLayout: React.FC = () => {
       </header>
       <div className="workspace">
         <nav>
-          <Accordion folderName="Dashboard" 
-            childrenFolders={[
-              // <Accordion key="1" folderName="Dashboard2" childrenFolders={[]} childrenFiles={[]}/>
-            ]}
-            childrenFiles={[
-              // <LinkOptionComponent key="2" fileName="DashBoardName" icon={fileIcon} link={"/dashboard"} />
-            ]}
-          />
+          {renderFolders(folders)}
         </nav>
         <div className="screen">
           <Outlet />
