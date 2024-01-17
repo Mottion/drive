@@ -15,8 +15,8 @@ model User {
   name                  String
   email                 String @unique()
   password              String
-  profileId             Int
   imageUrl              String?
+  profileId             Int
   createdFolders        Folder[] @relation("OwnerFolders")
   foldersWithAccess     Folder[] @relation("AccessFolders")
   createdFiles          File[] @relation("OwnerFiles")

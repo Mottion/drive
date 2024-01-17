@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 // styled-components 
 import { Container } from "./styles";
 import Accordion from "../../components/accordion/Accordion";
-import LinkOptionComponent from "../../components/LinkOptionComponent/LinkOptionComponent";
+import LinkOptionComponent from "../../components/linkOptionComponent/LinkOptionComponent";
 
 const MainLayout: React.FC = () => {
 
@@ -25,10 +25,10 @@ const MainLayout: React.FC = () => {
         <nav>
           <Accordion folderName="Dashboard" 
             childrenFolders={[
-              <Accordion folderName="Dashboard2" childrenFolders={[]} childrenFiles={[]}/>
+              // <Accordion key="1" folderName="Dashboard2" childrenFolders={[]} childrenFiles={[]}/>
             ]}
             childrenFiles={[
-              <LinkOptionComponent fileName="DashBoardName" icon={fileIcon} link={"/dashboard"} />
+              // <LinkOptionComponent key="2" fileName="DashBoardName" icon={fileIcon} link={"/dashboard"} />
             ]}
           />
         </nav>

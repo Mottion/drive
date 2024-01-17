@@ -17,15 +17,17 @@ const LoginScreen: React.FC = () => {
 
   async function handleLogin(){
     const user = await server.login(email, password);
-    await login(user);
+    if(user){
+      await login(user);
+    }
   }
 
   return (
     <Container>
       <div className="form">
         <h2>LOGIN</h2>
-        <CustomInput label="Email" value={{get: email, set: setEmail}} placeholder="Enter with your email" />
-        <CustomInput label="Password" value={{get: password, set: setPassword}} placeholder="Enter with your password" />
+        <CustomInput type="email" label="Email" value={{get: email, set: setEmail}} placeholder="Enter with your email" />
+        <CustomInput type="password" label="Password" value={{get: password, set: setPassword}} placeholder="Enter with your password" />
         <a className="forgotten" href="#">Forgot your password?</a>
         <CustomButton onclick={handleLogin} text="LOGIN" />
       </div>

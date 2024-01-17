@@ -1,20 +1,34 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Prisma } from '@prisma/client';
+import { Request } from 'express';
+import { diskStorage } from 'multer';
+import { FileInterceptor } from '@nestjs/platform-express';
+
+const multerInterceptor = {
+  storage: diskStorage({
+    destination: "./uploads",
+    filename: (req, file, cb) => {
+      const uniquePreffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+      cb(null,uniquePreffix + "-" + file.originalname)
+    }
+  }),
+}
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post("/create-user")
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  async create(@Body() createUserDto: Prisma.UserCreateInput, @Req() req: Request) {
+    return await this.userService.create(createUserDto, req);
   }
 
-  @Get()
-  findAll() {
-    return this.userService.findAll();
+  @Post("/upload-image")
+  @UseInterceptors(FileInterceptor("file", multerInterceptor))
+  async uploadImage(@UploadedFile() file: any, @Req() req: Request){
+    return await this.userService.checkFileType(file, req);
   }
 
   @Get(':id')

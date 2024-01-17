@@ -1,13 +1,13 @@
 import React from "react";
 import { Container } from "./styles";
-import { CustomInputProps } from "../../@types/CustomInputProps";
+import { InputProps } from "../../@types/InputProps";
 
-const CustomInput: React.FC<CustomInputProps> = ({label, value, placeholder}) => {
+const CustomInput: React.FC<InputProps> = ({label, type, value, placeholder}) => {
   return (
     <Container>
       <label htmlFor={label}>{label}</label>
       <input 
-        type="text" 
+        type={type} 
         value={value.get}
         onChange={(e) => {value.set(e.target.value)}} 
         placeholder={placeholder}

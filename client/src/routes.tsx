@@ -5,6 +5,9 @@ import { useAuth } from "./contexts/AuthContext";
 import ErrorScreen from "./screens/error/ErrorScreen";
 import MainLayout from "./layouts/Main/MainLayout";
 import DashBoardScreen from "./screens/dashboard/DashBoardScreen";
+import NewUserScreen from "./screens/newUser/NewUserScreen";
+import ManageUsersScreen from "./screens/manageUsers/ManageUsersScreen";
+import ManagePermissionsScreen from "./screens/managePermissions/ManagePermissionsScreen";
 
 const authRoutes = createBrowserRouter([
   {
@@ -23,6 +26,18 @@ const appRoutes = createBrowserRouter([
         path: "/dashboard",
         element: <DashBoardScreen />,
       },
+      {
+        path: "/newUser",
+        element: <NewUserScreen />,
+      },
+      {
+        path: "/manageUsers",
+        element: <ManageUsersScreen />,
+      },
+      {
+        path: "/managePermissions",
+        element: <ManagePermissionsScreen />,
+      },
     ],
   },
 ]);
@@ -32,7 +47,7 @@ const Routes: React.FC = () => {
   const routeStack = user ? appRoutes : authRoutes;
 
   return (
-    <RouterProvider router={appRoutes} />
+    <RouterProvider router={routeStack} />
   )
 }
 
