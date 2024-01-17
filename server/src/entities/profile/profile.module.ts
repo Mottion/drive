@@ -19,7 +19,6 @@ import { AuthModule } from 'src/services/auth/auth.module';
   imports: [
     PrismaModule,
     UserModule,
-    AuthModule
   ],
 })
 export class ProfileModule {}

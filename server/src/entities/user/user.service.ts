@@ -25,7 +25,7 @@ export class UserService {
     return payload;
   }
 
-  async create(createUserDto: Prisma.UserCreateInput, req: Request): Promise<User> {
+  async create(createUserDto: Prisma.UserCreateInput, req: Request): Promise<Partial<User>> {
     const paylod = await this.getUserFromHeader(req);
     const user = await this.findByEmail(paylod.email);
     
@@ -33,7 +33,7 @@ export class UserService {
       throw new HttpException("this user is not an ADMIN", HttpStatus.UNAUTHORIZED);
     }
 
-    const newUser = this.prisma.user.create({data: createUserDto});
+    const {password, ...newUser} = await this.prisma.user.create({data: createUserDto});
     return newUser;
   }
 

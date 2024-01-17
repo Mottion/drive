@@ -67,6 +67,66 @@ async function main() {
       imageUrl: null
     }
   });
+
+  // pastas iniciais:
+
+  const dashboardAdmin = await prisma.folder.upsert({
+    where: {id: 1},
+    update: {},
+    create: {
+      id: 1,
+      usersWithAccess: {connect: {id: adminUser.id}},
+      ownerId: adminUser.id,
+      folderName: "DashBoard ADMIN"
+    }
+  })
+
+  const dashboardTi = await prisma.folder.upsert({
+    where: {id: 2},
+    update: {},
+    create: {
+      id: 2,
+      usersWithAccess: {connect: {id: adminUser.id}},
+      ownerId: josh.id,
+      folderName: "DashBoard TI"
+    },
+  })
+
+  const newsTi = await prisma.folder.upsert({
+    where: {id: 3},
+    update: {},
+    create: {
+      id: 3,
+      usersWithAccess: {connect: {id: adminUser.id}},
+      parentFolderId: dashboardTi.id,
+      ownerId: josh.id,
+      folderName: "News"
+    },
+  })
+
+  const sprint = await prisma.folder.upsert({
+    where: {id: 4},
+    update: {},
+    create: {
+      id: 4,
+      usersWithAccess: {connect: {id: adminUser.id}},
+      parentFolderId: newsTi.id,
+      ownerId: josh.id,
+      folderName: "sprint"
+    },
+  })
+
+
+  const sprint1 = await prisma.folder.upsert({
+    where: {id: 5},
+    update: {},
+    create: {
+      id: 5,
+      parentFolderId: sprint.id,
+      ownerId: josh.id,
+      folderName: "sprint1"
+    },
+  })
 }
 
 

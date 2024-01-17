@@ -61,7 +61,22 @@ export const ServerProvider: React.FC<ContextProps> = ({children}) => {
           Authorization: "Bearer " + user?.access_token
         }
       });
-      return data as ProfileProps[];
+      return data;
+    }catch(error){
+      console.log(error);
+      return null
+    }
+  }
+
+  /* FOLDERS */
+  async function getUserFolders(){
+    try{
+      const {data} = await api.get("/folder/get-user-folders", {
+        headers: {
+          Authorization: "Bearer " + user?.access_token
+        }
+      });
+      return data;
     }catch(error){
       console.log(error);
       return null
@@ -73,7 +88,8 @@ export const ServerProvider: React.FC<ContextProps> = ({children}) => {
       login,
       getProfiles,
       createUser,
-      uploadImage
+      uploadImage,
+      getUserFolders
     }}>
       {children}
     </ServerContext.Provider >

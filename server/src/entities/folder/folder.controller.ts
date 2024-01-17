@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common';
 import { FolderService } from './folder.service';
 import { CreateFolderDto } from './dto/create-folder.dto';
 import { UpdateFolderDto } from './dto/update-folder.dto';
+import { Request } from 'express';
 
 @Controller('folder')
 export class FolderController {
@@ -12,9 +13,13 @@ export class FolderController {
     return this.folderService.create(createFolderDto);
   }
 
-  @Get()
-  findAll() {
-    return this.folderService.findAll();
+  @Get("get-user-folders")
+  async getUserFolders(@Req() req: Request) {
+    try{
+      return await this.folderService.getUserFolders(req);
+    }catch(error){
+      throw error
+    }
   }
 
   @Get(':id')

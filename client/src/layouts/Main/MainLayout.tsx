@@ -1,17 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 
 // styled-components 
 import { Container } from "./styles";
 import Accordion from "../../components/accordion/Accordion";
 import LinkOptionComponent from "../../components/linkOptionComponent/LinkOptionComponent";
+import { useServer } from "../../contexts/ServerContext";
+import { FolderEntityProps } from "../../@types/FolderEntityProps";
 
 const MainLayout: React.FC = () => {
+  const [folders, setFolders] = useState<FolderEntityProps[]>([]);
+  
+  const server = useServer();
+
 
   const fileIcon = <i className="fa-solid fa-file"></i>;
   const userIcon = <i className="fa-solid fa-user-plus"></i>;
   const usersIcon = <i className="fa-sharp fa-solid fa-users"></i>;
   const shieldIcon = <i className="fa-solid fa-shield"></i>;
+
+  useEffect(() => {
+    getUserFolders()
+  },[]) 
+
+  async function getUserFolders(){
+    const folders = await server.getUserFolders();
+    if(folders){
+      setFolders(folders);
+    }
+  } 
 
   return (
     <Container>
